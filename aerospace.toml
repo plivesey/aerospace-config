@@ -167,7 +167,8 @@ run = 'move-node-to-workspace M'
 
     # Fling focused window to the first empty workspace and follow it
     alt-shift-space = '''exec-and-forget bash -c '
-        EMPTY=$(aerospace list-workspaces --monitor all --empty | head -1)
+        BUILTIN=$(aerospace list-workspaces --monitor built-in)
+        EMPTY=$(aerospace list-workspaces --monitor all --empty | grep -vxF "$BUILTIN" | head -1)
         if [ -n "$EMPTY" ]; then
             aerospace move-node-to-workspace "$EMPTY"
             aerospace workspace "$EMPTY"
